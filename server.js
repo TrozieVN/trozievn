@@ -1,4 +1,3 @@
-
 const express = require("express");
 const session = require("express-session");
 
@@ -27,9 +26,10 @@ app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 
-const createAdmin = require("./database/createAdmin");
+
+// chỉ tạo bảng
 require("./database/createTable");
-require("./database/createAdmin");
+
 
 app.listen(PORT, () => {
     console.log(`Web đang chạy tại port ${PORT}`);

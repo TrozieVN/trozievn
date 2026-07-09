@@ -9,7 +9,16 @@ router.post("/login", (req, res) => {
     const { username, password } = req.body;
 
     db.get(
-        "SELECT * FROM users WHERE username = ?",
+    "SELECT * FROM users WHERE username = ?",
+    [username],
+    async (err, user) => {
+
+        console.log("USERNAME NHẬN:", username);
+        console.log("USER TRONG DB:", user);
+
+        if (err) {
+            return res.status(500).send("Lỗi server");
+        }
         [username],
         async (err, user) => {
 

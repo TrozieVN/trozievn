@@ -1,3 +1,4 @@
+
 const express = require("express");
 const session = require("express-session");
 
@@ -25,9 +26,6 @@ app.use("/api/visits", visitsRoute);
 app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
-
-require("./database/createTable");
-require("./database/createAdmin");
 
 const createAdmin = require("./database/createAdmin");
 app.listen(PORT, () => {

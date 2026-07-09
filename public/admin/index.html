@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>TrozieVn Admin</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    padding:30px;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+.box{
+    border:1px solid #ddd;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+button{
+    padding:8px 15px;
+    cursor:pointer;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+td,th{
+    border:1px solid #ddd;
+    padding:8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>TrozieVn - Quản lý</h1>
+
+
+<div class="box">
+
+<h2>Danh sách khách đặt lịch</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Tên</th>
+<th>Số điện thoại</th>
+<th>Phòng</th>
+<th>Ngày xem</th>
+<th>Ghi chú</th>
+</tr>
+</thead>
+
+<tbody id="visitList">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<script>
+
+async function loadVisits(){
+
+    const res = await fetch("/api/visits");
+
+    const data = await res.json();
+
+
+    const box = document.querySelector("#visitList");
+
+
+    box.innerHTML = data.map(v => `
+
+<tr>
+<td>${v.name}</td>
+<td>${v.phone}</td>
+<td>${v.room_title || "Không có"}</td>
+<td>${v.date}</td>
+<td>${v.note || ""}</td>
+</tr>
+
+`).join("");
+
+}
+
+
+loadVisits();
+
+</script>
+
+
+</body>
+</html>

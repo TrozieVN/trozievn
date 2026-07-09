@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrozieVn - Tìm phòng trọ, căn hộ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#">
+        <img class="brand-logo" src="trozie-logo.png" alt="TrozieVn" />
+        <span>
+          <strong>TrozieVn</strong>
+          <small>Tìm phòng theo tỉnh, quận, phường</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="#rooms">Phòng trống</a>
+        <a href="#owner">Troziee</a>
+        <a href="#contact">Liên hệ</a>
+      </nav>
+      <button class="icon-button" id="zaloTop" type="button" aria-label="Tư vấn qua Zalo">Zalo</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">TrozieVn - phòng trọ, căn hộ mini, mặt bằng</p>
+          <h1>Tìm phòng trống nhanh theo tỉnh thành, quận phường và mức giá</h1>
+          <p class="hero-text">Tìm phòng theo khu vực, mức giá và xem chi tiết phòng nhanh chóng</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#rooms">Xem phòng trống</a>
+            <button class="secondary-button" id="showZaloHero" type="button">Tư vấn qua Zalo</button>
+          </div>
+        </div>
+        <div class="hero-mascot" aria-hidden="true">
+          <img src="trozie-mascot.png" alt="" />
+        </div>
+      </section>
+
+      <section class="filters" aria-label="Bộ lọc phòng">
+        <label>
+          <span>Tỉnh / Thành phố</span>
+          <select id="provinceFilter">
+            <option value="all">Tất cả tỉnh thành</option>
+          </select>
+        </label>
+        <label>
+          <span>Quận / huyện</span>
+          <select id="districtFilter" disabled>
+            <option value="all">Chọn tỉnh trước</option>
+          </select>
+        </label>
+        <label>
+          <span>Phường / xã</span>
+          <select id="wardFilter" disabled>
+            <option value="all">Chọn quận trước</option>
+          </select>
+        </label>
+        <label>
+          <span>Loại phòng</span>
+          <select id="typeFilter">
+            <option value="all">Tất cả loại phòng</option>
+          </select>
+        </label>
+        <label class="search-box">
+          <span>Tìm nhanh</span>
+          <input id="searchInput" type="search" placeholder="Đường, tiện ích, tên phòng..." />
+        </label>
+        <label>
+          <span>Mức giá</span>
+          <select id="priceFilter">
+            <option value="all">Tất cả mức giá</option>
+            <option value="0-3000000">Dưới 3 triệu</option>
+            <option value="3000000-5000000">3 - 5 triệu</option>
+            <option value="5000000-8000000">5 - 8 triệu</option>
+            <option value="8000000-999999999">Trên 8 triệu</option>
+          </select>
+        </label>
+        <label>
+          <span>Sắp xếp</span>
+          <select id="sortFilter">
+            <option value="newest">Mới nhất</option>
+            <option value="price-asc">Giá tăng dần</option>
+            <option value="price-desc">Giá giảm dần</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="content-grid" id="rooms">
+        <div>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Danh sách cập nhật</p>
+              <h2>Phòng trống hiện có</h2>
+            </div>
+            <span id="resultCount">0 kết quả</span>
+          </div>
+          <div class="room-grid" id="roomGrid"></div>
+        </div>
+
+        <aside class="request-box" id="contact">
+          <p class="eyebrow">Đặt lịch xem phòng</p>
+          <h2>Gửi yêu cầu về email</h2>
+          <form id="visitForm">
+            <label>
+              <span>Phòng quan tâm</span>
+              <select id="roomSelect" name="room"></select>
+            </label>
+            <label>
+              <span>Họ và tên</span>
+              <input name="name" autocomplete="name" required placeholder="Nguyễn Văn A" />
+            </label>
+            <label>
+              <span>Số điện thoại</span>
+              <input name="phone" autocomplete="tel" required placeholder="09xx xxx xxx" />
+            </label>
+            <label>
+              <span>Ngày muốn xem</span>
+              <input name="date" type="date" required />
+            </label>
+            <label>
+              <span>Ghi chú</span>
+              <textarea name="note" rows="4" placeholder="Ví dụ: muốn xem sau 18h, cần chỗ để xe..."></textarea>
+            </label>
+            <button class="primary-button full" type="submit">Tạo email yêu cầu</button>
+            <div class="zalo-card visible-zalo">
+              <strong>Số Zalo Troziee</strong>
+              <a href="https://zalo.me/0914187636" target="_blank" rel="noreferrer">091 418 7636</a>
+            </div>
+          </form>
+          <p class="form-note" id="mailStatus"></p>
+          <div class="zalo-card" id="zaloCard" hidden>
+            <strong>Tư vấn trực tiếp qua Zalo</strong>
+            <a id="zaloNumber" href="https://zalo.me/0914187636" target="_blank" rel="noreferrer">091 418 7636</a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="owner-panel" id="owner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Dành cho Troziee</p>
+            <h2>Đăng nhập để đăng phòng</h2>
+          </div>
+        </div>
+
+        <form class="owner-login" id="ownerLoginForm">
+          <label>
+            <span>Số điện thoại Troziee</span>
+            <input name="phone" autocomplete="username" required placeholder="số điện thoại" />
+          </label>
+          <label>
+            <span>Mật khẩu</span>
+            <input name="password" type="password" autocomplete="current-password" required placeholder="Nhập mật khẩu" />
+          </label>
+          <button class="primary-button full" type="submit">Đăng nhập Troziee</button>
+          <p class="form-note wide" id="ownerLoginStatus">Khu vực dành riêng cho Troziee.</p>
+        </form>
+
+        <div class="owner-session owner-only" id="ownerSession" hidden>
+          <strong>Đã đăng nhập Troziee</strong>
+          <button class="secondary-button" id="ownerLogout" type="button">Đăng xuất</button>
+          <a class="secondary-button" id="externalSiteLink" href="https://quanly.nhatrovn.vn/?rurl=%2Fmain%2Froom-sale%2Finit" target="_blank" rel="noreferrer">Mở web liên kết</a>
+        </div>
+
+        <form class="owner-form owner-only" id="ownerRoomForm" hidden>
+          <input type="hidden" name="roomId" />
+          <label>
+            <span>Tên phòng</span>
+            <input name="title" placeholder="Ví dụ: Phòng studio Sơn Trà" />
+          </label>
+          <label>
+            <span>Tỉnh / Thành phố</span>
+            <input name="province" placeholder="Đà Nẵng" />
+          </label>
+          <label>
+            <span>Quận / huyện</span>
+            <input name="district" placeholder="Sơn Trà" />
+          </label>
+          <label>
+            <span>Phường / xã</span>
+            <input name="ward" placeholder="An Hải" />
+          </label>
+          <label>
+            <span>Địa chỉ</span>
+            <input name="address" placeholder="Đường, phường, quận" />
+          </label>
+          <label>
+            <span>Loại phòng</span>
+            <input name="type" placeholder="Studio, phòng trọ, căn hộ mini..." />
+          </label>
+          <label>
+            <span>Giá thuê tự điền</span>
+            <input name="price" placeholder="Ví dụ: 3.600.000 hoặc 36xxxxxx" />
+          </label>
+          <label>
+            <span>Diện tích tự điền m2</span>
+            <input name="area" placeholder="Ví dụ: 25m2 hoặc để trống" />
+          </label>
+          <label>
+            <span>Tiền cọc</span>
+            <input name="deposit" placeholder="1 tháng" />
+          </label>
+          <label>
+            <span>Tiền điện</span>
+            <input name="electricity" placeholder="4.000đ/kWh" />
+          </label>
+          <label>
+            <span>Tiền nước</span>
+            <input name="water" placeholder="100.000đ/người" />
+          </label>
+          <label>
+            <span>Wifi / dịch vụ</span>
+            <input name="serviceFee" placeholder="Miễn phí hoặc 100.000đ/tháng" />
+          </label>
+          <label>
+            <span>Xe / chỗ để xe</span>
+            <input name="parking" placeholder="Có chỗ để xe, phí xe, hầm xe..." />
+          </label>
+          <label>
+            <span>Số người tối đa</span>
+            <input name="maxPeople" placeholder="Ví dụ: 2 người hoặc để trống" />
+          </label>
+          <label>
+            <span>Trạng thái</span>
+            <select name="status">
+              <option value="Còn trống">Còn trống</option>
+              <option value="Sắp trống">Sắp trống</option>
+              <option value="Đang giữ chỗ">Đang giữ chỗ</option>
+              <option value="Đã cho thuê">Đã cho thuê</option>
+            </select>
+          </label>
+          <label>
+            <span>Link bài/ảnh trên web quản lý</span>
+            <input name="sourceLink" placeholder="Dán link phòng nếu có" />
+          </label>
+          <label>
+            <span>Tiện ích</span>
+            <input name="amenities" placeholder="Máy lạnh, ban công, chỗ để xe" />
+          </label>
+          <label class="wide">
+            <span>Mô tả</span>
+            <textarea name="description" rows="3" placeholder="Mô tả ngắn về phòng"></textarea>
+          </label>
+          <label class="wide">
+            <span>Ảnh phòng</span>
+            <input name="photo" type="file" accept="image/*" />
+          </label>
+          <div class="owner-form-actions wide">
+            <button class="primary-button full" id="ownerSubmitButton" type="submit">Thêm phòng lên web</button>
+            <button class="secondary-button full" id="cancelEditButton" type="button" hidden>Hủy sửa</button>
+          </div>
+        </form>
+        <p class="form-note">Chỉ Troziee sau khi đăng nhập mới sửa phòng tự đăng và hủy/mở lại từng phòng.</p>
+      </section>
+    </main>
+
+    <dialog id="roomDialog">
+      <button class="close-button" id="closeDialog" type="button" aria-label="Đóng">x</button>
+      <div id="dialogContent"></div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>

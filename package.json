@@ -1,26 +1,24 @@
 {
   "name": "myweb",
   "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "engines": {
     "node": "20.x"
-  },
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "bcrypt": "^6.0.0",
+    "bcrypt": "^5.1.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "multer": "^2.2.0",
-    "nodemailer": "^9.0.3",
-    "sqlite3": "^6.0.1"
-  },
-  "devDependencies": {}
+    "nodemailer": "^7.0.0",
+    "sqlite3": "^5.1.7"
+  }
 }

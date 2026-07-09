@@ -65,7 +65,11 @@ document.getElementById("loginForm")
 
     const text = await res.text();
 
+if (text === "Đăng nhập thành công") {
+    window.location.href = "/admin/index.html";
+} else {
     document.getElementById("result").innerText = text;
+}
 
 });
 

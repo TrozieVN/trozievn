@@ -13,9 +13,10 @@ router.post("/login", (req, res) => {
         [username],
         async (err, user) => {
 
-            if (err) {
-                return res.status(500).send("Lỗi server");
-            }
+           if (err) {
+    console.log("Lỗi login:", err);
+    return res.status(500).send("Lỗi server");
+}
 
             if (!user) {
                 return res.send("Sai tài khoản hoặc mật khẩu");

@@ -21,15 +21,12 @@ async function createAdmin() {
                 return;
             }
 
-            const hashPassword = await bcrypt.hash(password, 10);
+            const hash = await bcrypt.hash(password, 10);
 
             db.run(
-                `
-                INSERT INTO users (username, password)
-                VALUES (?, ?)
-                `,
-                [phone, hashPassword],
-                function(err) {
+                "INSERT INTO users(username,password) VALUES(?,?)",
+                [phone, hash],
+                (err) => {
 
                     if (err) {
                         console.log("Lỗi tạo admin:", err.message);
@@ -43,4 +40,4 @@ async function createAdmin() {
     );
 }
 
-createAdmin();
+module.exports = createAdmin;

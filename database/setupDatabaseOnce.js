@@ -1,2 +1,6 @@
-require("./createTable");
-require("./createAdmin");
+const createTable = require("./createTable");
+const createAdmin = require("./createAdmin");
+
+createTable(() => {
+    createAdmin();
+});

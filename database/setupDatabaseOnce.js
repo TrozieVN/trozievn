@@ -1,0 +1,2 @@
+require("./createTable");
+require("./createAdmin");

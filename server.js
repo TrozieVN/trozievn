@@ -26,6 +26,10 @@ app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`Web đang chạy tại port ${PORT}`);
+const createTable = require("./database/createTable");
+
+createTable(() => {
+    app.listen(PORT, () => {
+        console.log(`Web đang chạy tại port ${PORT}`);
+    });
 });

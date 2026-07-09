@@ -1,4 +1,6 @@
-node_modules/ 
-database/*.db 
-public/uploads/ 
-.env 
+node_modules/
+database/*.db
+.env
+
+public/uploads/*
+!public/uploads/empty.txt

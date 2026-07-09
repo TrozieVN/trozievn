@@ -24,6 +24,8 @@ app.use("/api/visits", visitsRoute);
 
 app.use(express.static("public"));
 
-app.listen(3000, () => {
-    console.log("Web đang chạy tại http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Web đang chạy tại port ${PORT}`);
 });

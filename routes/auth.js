@@ -8,24 +8,19 @@ router.post("/login", (req, res) => {
 
     const { username, password } = req.body;
 
+    console.log("USERNAME NHẬN:", username);
+
     db.get(
-    "SELECT * FROM users WHERE username = ?",
-    [username],
-    async (err, user) => {
-
-        console.log("USERNAME NHẬN:", username);
-        console.log("USER TRONG DB:", user);
-
-        if (err) {
-            return res.status(500).send("Lỗi server");
-        }
+        "SELECT * FROM users WHERE username = ?",
         [username],
         async (err, user) => {
 
-           if (err) {
-    console.log("Lỗi login:", err);
-    return res.status(500).send("Lỗi server");
-}
+            if (err) {
+                console.log("Lỗi database:", err.message);
+                return res.status(500).send("Lỗi server");
+            }
+
+            console.log("USER TRONG DB:", user);
 
             if (!user) {
                 return res.send("Sai tài khoản hoặc mật khẩu");
@@ -35,6 +30,8 @@ router.post("/login", (req, res) => {
                 password,
                 user.password
             );
+
+            console.log("PASSWORD ĐÚNG:", checkPassword);
 
             if (!checkPassword) {
                 return res.send("Sai tài khoản hoặc mật khẩu");

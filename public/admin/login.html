@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đăng nhập Troziee</title>
+</head>
+
+<body>
+
+<h2>Đăng nhập để đăng phòng</h2>
+
+<form id="loginForm">
+
+    <label>Số điện thoại Troziee</label><br>
+    <input 
+        type="text" 
+        name="username"
+        id="username"
+        value="0914187636"
+    >
+
+    <br><br>
+
+    <label>Mật khẩu</label><br>
+    <input 
+        type="password"
+        name="password"
+        id="password"
+        value="Hai682007#"
+    >
+
+    <br><br>
+
+    <button type="submit">
+        Đăng nhập Troziee
+    </button>
+
+</form>
+
+
+<p id="result"></p>
+
+
+<script>
+
+document.getElementById("loginForm")
+.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+
+    const res = await fetch("/auth/login", {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            username,
+            password
+        })
+    });
+
+
+    const text = await res.text();
+
+    document.getElementById("result").innerText = text;
+
+});
+
+</script>
+
+</body>
+</html>

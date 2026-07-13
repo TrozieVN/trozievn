@@ -1,9 +1,8 @@
 const express = require("express");
-const db = require("../database/db")
+const db = require("../database/db");
 const sendMail = require("../mailer");
 
 const router = express.Router();
-
 
 // Khách gửi yêu cầu xem phòng
 router.post("/", async (req, res) => {
@@ -34,11 +33,16 @@ router.post("/", async (req, res) => {
             ]
         );
 
-console.log("Bắt đầu gửi mail");
+        // Trả kết quả cho khách ngay
+        res.json({
+            message: "Đặt lịch xem phòng thành công",
+            id: result.rows[0].id
+        });
 
-        await sendMail(
-    "Có khách đặt lịch xem phòng TrozieVn",
-    `
+        // Gửi mail ở nền
+        sendMail(
+            "Có khách đặt lịch xem phòng TrozieVn",
+            `
 Khách: ${visit.name}
 
 Số điện thoại: ${visit.phone}
@@ -47,17 +51,17 @@ Ngày xem: ${visit.date}
 
 Ghi chú: ${visit.note || "Không có"}
 `
-);
+        ).then(() => {
 
-console.log("Đã chạy xong sendMail");
+            console.log("Đã gửi mail thành công");
 
-        res.json({
-            message: "Đã lưu lịch xem phòng và gửi thông báo",
-            id: result.rows[0].id
+        }).catch((err) => {
+
+            console.log("Lỗi gửi mail:", err.message);
+
         });
 
-
-    } catch(err){
+    } catch (err) {
 
         console.log(err);
 
@@ -70,7 +74,6 @@ console.log("Đã chạy xong sendMail");
 });
 
 
-
 // Lấy danh sách khách đặt lịch
 router.get("/", async (req, res) => {
 
@@ -78,7 +81,7 @@ router.get("/", async (req, res) => {
 
         const result = await db.query(
             `
-            SELECT 
+            SELECT
                 visits.*,
                 rooms.title AS room_title
             FROM visits
@@ -88,18 +91,18 @@ router.get("/", async (req, res) => {
             `
         );
 
-
         res.json(result.rows);
 
-
-    } catch(err){
+    } catch (err) {
 
         console.log(err);
-        res.status(500).json(err);
+
+        res.status(500).json({
+            error: "Không lấy được danh sách lịch xem phòng"
+        });
 
     }
 
 });
-
 
 module.exports = router;

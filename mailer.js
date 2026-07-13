@@ -4,33 +4,22 @@ const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
         user: "ntnh8686@gmail.com",
-        pass: "mật_khẩu_app_cũ"
+        pass: "cksw lytm qosj fepz"
     }
 });
 
+async function sendMail(subject, text) {
 
-async function sendMail(subject, text){
+    const info = await transporter.sendMail({
+        from: "ntnh8686@gmail.com",
+        to: "hai682007@gmail.com",
+        subject,
+        text
+    });
 
-    try {
+    console.log("Đã gửi mail:", info.response);
 
-        const info = await transporter.sendMail({
-
-            from: "ntnh8686@gmail.com",
-            to: "hai682007@gmail.com",
-            subject: subject,
-            text: text
-
-        });
-
-        console.log("Đã gửi mail:", info.response);
-
-    } catch(err){
-
-        console.log("Lỗi gửi mail:", err.message);
-
-    }
-
+    return info;
 }
-
 
 module.exports = sendMail;

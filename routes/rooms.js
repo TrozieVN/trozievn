@@ -37,36 +37,57 @@ router.post("/", async (req, res) => {
         const result = await db.query(
             `
             INSERT INTO rooms
-            (
-                title,
-                province,
-                district,
-                ward,
-                address,
-                type,
-                price,
-                area,
-                status,
-                photo,
-                description
-            )
-            VALUES
-            ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+(
+title,
+province,
+district,
+ward,
+address,
+type,
+price,
+area,
+status,
+photo,
+description,
+deposit,
+electricity,
+water,
+service_fee,
+parking,
+max_people,
+amenities,
+source_link
+)
+VALUES
+(
+$1,$2,$3,$4,$5,
+$6,$7,$8,$9,$10,
+$11,$12,$13,$14,$15,
+$16,$17,$18,$19
+)
             RETURNING id
             `,
             [
-                room.title,
-                room.province,
-                room.district,
-                room.ward,
-                room.address,
-                room.type,
-                room.price,
-                room.area,
-                room.status,
-                room.photo,
-                room.description
-            ]
+    room.title,
+    room.province,
+    room.district,
+    room.ward,
+    room.address,
+    room.type,
+    room.price,
+    room.area,
+    room.status,
+    room.photo,
+    room.description,
+    room.deposit,
+    room.electricity,
+    room.water,
+    room.serviceFee,
+    room.parking,
+    room.maxPeople,
+    room.amenities,
+    room.sourceLink
+]
         );
 
 
@@ -128,34 +149,57 @@ router.put("/:id", async (req, res) => {
             `
             UPDATE rooms SET
 
-                title = $1,
-                province = $2,
-                district = $3,
-                ward = $4,
-                address = $5,
-                type = $6,
-                price = $7,
-                area = $8,
-                status = $9,
-                photo = $10,
-                description = $11
+    title = $1,
+    province = $2,
+    district = $3,
+    ward = $4,
+    address = $5,
+    type = $6,
+    price = $7,
+    area = $8,
+    status = $9,
+    photo = $10,
+    description = $11,
 
-            WHERE id = $12
+    deposit = $12,
+    electricity = $13,
+    water = $14,
+    service_fee = $15,
+    parking = $16,
+    max_people = $17,
+    amenities = $18,
+    source_link = $19
+
+WHERE id = $20
             `,
             [
-                room.title,
-                room.province,
-                room.district,
-                room.ward,
-                room.address,
-                room.type,
-                room.price,
-                room.area,
-                room.status,
-                room.photo,
-                room.description,
-                id
-            ]
+    room.title,
+    room.province,
+    room.district,
+    room.ward,
+    room.address,
+    room.type,
+    room.price,
+    room.area,
+    room.status,
+    room.photo,
+    room.description,
+
+    room.deposit,
+    room.electricity,
+    room.water,
+    room.serviceFee,
+    room.parking,
+    room.maxPeople,
+
+    Array.isArray(room.amenities)
+        ? room.amenities.join(",")
+        : room.amenities,
+
+    room.sourceLink,
+
+    id
+]
         );
 
 

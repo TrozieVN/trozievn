@@ -628,9 +628,19 @@ async function loadRoomsFromDatabase() {
 
   rooms = data.map(room => ({
     ...room,
+
     id: String(room.id),
-    amenities: [],
+
+    amenities: room.amenities
+        ? room.amenities.split(",").map(item => item.trim())
+        : [],
+
+    serviceFee: room.service_fee,
+    maxPeople: room.max_people,
+    sourceLink: room.source_link,
+
     available: room.status !== "Đã cho thuê",
+
     createdAt: room.created_at
 }));
 
